@@ -60,7 +60,7 @@ failing_connect_prp_stmt_test() ->
                  mysql:start_link([
                                    {user, ?user},
                                    {password, ?password},
-                                   {prepare, [{'invalid_qry', "select 1 from does_not_exist"}]}
+                                   {prepare, [{'invalid_qry', "select 1 from otptest.does_not_exist"}]}
                 ])),
     receive
         {'EXIT', _Pid, {1045, <<"28000">>, <<"Access denied", _/binary>>}} -> ok
