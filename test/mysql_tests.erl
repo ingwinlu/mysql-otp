@@ -47,7 +47,7 @@ failing_connect_test() ->
     ?assertMatch({error, {1045, <<"28000">>, <<"Access denied", _/binary>>}},
                  mysql:start_link([{user, "dummy"}, {password, "junk"}])),
     receive
-        {'EXIT', _Pid, {1045, <<"28000">>, <<"Access denie", _/binary>>}} -> ok
+        {'EXIT', _Pid, {1045, <<"28000">>, <<"Access denied", _/binary>>}} -> ok
     after 1000 ->
         ?assertEqual(ok, no_exit_message)
     end,
