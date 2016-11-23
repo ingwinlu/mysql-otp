@@ -58,8 +58,8 @@ failing_connect_prp_stmt_test() ->
     process_flag(trap_exit, true),
     ?assertMatch({error, {1045, <<"28000">>, <<"Access denied", _/binary>>}},
                  mysql:start_link([
-                                   {user, "dummy"},
-                                   {password, "junk"},
+                                   {user, ?user},
+                                   {password, ?password},
                                    {prepare, [{'invalid_qry', "select 1 from does_not_exist"}]}
                 ])),
     receive
