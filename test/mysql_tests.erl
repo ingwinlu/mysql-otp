@@ -56,14 +56,14 @@ failing_connect_test() ->
 
 failing_connect_prp_stmt_test() ->
     process_flag(trap_exit, true),
-    ?assertMatch({error, {1045, <<"28000">>, <<"Access denied", _/binary>>}},
+    ?assertMatch({error, {1146,<<"42S02">>, <<"Table 'otptest.does_not_exist' doesn't exist">>}},
                  mysql:start_link([
                                    {user, ?user},
                                    {password, ?password},
                                    {prepare, [{'invalid_qry', "select 1 from otptest.does_not_exist"}]}
                 ])),
     receive
-        {'EXIT', _Pid, {1045, <<"28000">>, <<"Access denied", _/binary>>}} -> ok
+        {'EXIT', _Pid, {1146,<<"42S02">>, <<"Table 'otptest.does_not_exist' doesn't exist">>}} -> ok
     after 1000 ->
         ?assertEqual(ok, no_exit_message)
     end,
