@@ -56,7 +56,7 @@ failing_connect_test() ->
 
 failing_connect_prp_stmt_test() ->
     process_flag(trap_exit, true),
-    ?assertMatch({error, {1146,<<"42S02">>, <<"Table 'otptest.does_not_exist' doesn't exist">>}},
+    ?assertMatch(<<"">>,
                  mysql:start_link([
                                    {user, ?user},
                                    {password, ?password},
