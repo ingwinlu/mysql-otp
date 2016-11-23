@@ -53,6 +53,23 @@ failing_connect_test() ->
     end,
     process_flag(trap_exit, false).
 
+
+failing_connect_prp_stmt_test() ->
+    process_flag(trap_exit, true),
+    ?assertMatch({error, {1045, <<"28000">>, <<"Access denied", _/binary>>}},
+                 mysql:start_link([
+                                   {user, "dummy"},
+                                   {password, "junk"},
+                                   {prepare, [{'invalid_qry', "select 1 from does_not_exist"}]}
+                ])),
+    receive
+        {'EXIT', _Pid, {1045, <<"28000">>, <<"Access denied", _/binary>>}} -> ok
+    after 1000 ->
+        ?assertEqual(ok, no_exit_message)
+    end,
+    process_flag(trap_exit, false).
+
+
 successful_connect_test() ->
     %% A connection with a registered name and execute initial queries and
     %% create prepared statements.
